@@ -1,0 +1,119 @@
+<html>
+  <head>
+    <style>
+      #container{
+        font-family:monospace;
+        font-weight:bold;
+      }
+      table, th, td {
+        border: 1px solid;
+        text-align: center;
+        font-size: 140px;
+        width: 33.33%;
+        height: 33.33%;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+        -o-user-select:none;"
+       }
+      td:hover {
+        background-color: #f5f5f5;
+      }
+      table {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+
+    <div id="container"></div>
+
+    <script>
+      $("#container").text("Krestiki Noliki");
+      var stateMatrix = [[" "," "," "],[" "," "," "],[" "," "," "]];
+      function resetGame() {
+        stateMatrix = [[" "," "," "],[" "," "," "],[" "," "," "]];
+
+      }
+      function doMove() {
+        var i,j;
+        [i, j] = this.id.split('_').map(function(ind){ return +ind });
+        console.log(this.id);
+        console.log(stateMatrix.toString());
+        console.log("i:" + i + ", j:" + j);
+        if (stateMatrix[i][j] == " ") {
+          this.innerHTML = stateMatrix[i][j] = getMove();
+          console.log(stateMatrix[i][j]);
+        }
+        checkWinner();
+      }
+      function checkWinner() {
+        var row0 = [stateMatrix[0][0],stateMatrix[0][1],stateMatrix[0][2]].join("");
+        var row1 = [stateMatrix[1][0],stateMatrix[1][1],stateMatrix[1][2]].join("");
+        var row2 = [stateMatrix[2][0],stateMatrix[2][1],stateMatrix[2][2]].join("");
+        var col0 = [stateMatrix[0][0],stateMatrix[1][0],stateMatrix[2][0]].join("");
+        var col1 = [stateMatrix[0][1],stateMatrix[1][1],stateMatrix[2][1]].join("");
+        var col2 = [stateMatrix[0][2],stateMatrix[1][2],stateMatrix[2][2]].join("");
+        var diag0022 = [stateMatrix[0][0],stateMatrix[1][1],stateMatrix[2][2]].join("");
+        var diag0220 = [stateMatrix[0][2],stateMatrix[1][1],stateMatrix[2][0]].join("");
+
+        var states = [row0,row1,row2,col0,col1,col2,diag0022,diag0220];
+        console.log("states: " + states.toString());
+
+        if (states.includes("XXX")) {
+          console.log("X - win! Congrats!!!");
+          alert("X - win! Congrats!!!");
+          return;
+        }
+        if (states.includes("OOO")) {
+          console.log("O - win! Congrats!!!");
+          alert("O - win! Congrats!!!");
+        }
+
+      }
+      function makeCurrentMover() {
+        var mover = "X";
+        return function() {
+          if (this.mover == "X") {
+            this.mover = "O";
+          } else {
+            this.mover = "X";
+          }
+          return this.mover;
+        }
+      }
+      var getMove = makeCurrentMover();
+    </script>
+
+    <table id="gameField">
+        <tr>
+          <td onclick="doMove.call(this);" id="0_0" unselectable="on" onselectstart="return false;" onmousedown="return false;"
+></td>
+          <td onclick="doMove.call(this);" id="0_1" unselectable="on" onselectstart="return false;" onmousedown="return false;"
+></td>
+          <td onclick="doMove.call(this);" id="0_2" unselectable="on" onselectstart="return false;" onmousedown="return false;"
+></td>
+      </tr>
+        <tr>
+          <td onclick="doMove.call(this);" id="1_0" unselectable="on" onselectstart="return false;" onmousedown="return false;"
+></td>
+          <td onclick="doMove.call(this);" id="1_1" unselectable="on" onselectstart="return false;" onmousedown="return false;"
+></td>
+          <td onclick="doMove.call(this);" id="1_2" unselectable="on" onselectstart="return false;" onmousedown="return false;"
+></td>
+      </tr>
+        <tr>
+          <td onclick="doMove.call(this);" id="2_0" unselectable="on" onselectstart="return false;" onmousedown="return false;"
+></td>
+          <td onclick="doMove.call(this);" id="2_1" unselectable="on" onselectstart="return false;" onmousedown="return false;"
+></td>
+          <td onclick="doMove.call(this);" id="2_2" unselectable="on" onselectstart="return false;" onmousedown="return false;"
+></td>
+      </tr>
+    </table>
+  </body>
+</html>
