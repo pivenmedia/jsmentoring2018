@@ -1,12 +1,11 @@
 document.getElementById('container').innerHTML = "<h2>Krestiki Noliki</h2>";
-var table;
-table = document.getElementById('gameField');
+const table = document.getElementById('gameField');
 table.onclick = function(event) {
-  var target = event.target;
+  const target = event.target;
 
   // цикл двигается вверх от target к родителям до table
-  while (target != table) {
-    if (target.tagName == 'TD') {
+  while (target !== table) {
+    if (target.tagName === 'TD') {
       // нашли элемент, который нас интересует!
       doMove(target);
       return;
@@ -18,7 +17,7 @@ table.onclick = function(event) {
   // если цикл дошёл до table и ничего не нашёл,
   // то обработчик просто заканчивает работу
 }
-var stateMatrix = table.dataset.stateMatrix;
+let stateMatrix = table.dataset.stateMatrix;
 stateMatrix = [[" "," "," "],[" "," "," "],[" "," "," "]];
 function resetGame() {
   stateMatrix = [[" "," "," "],[" "," "," "],[" "," "," "]];
@@ -30,23 +29,24 @@ function doMove(target) {
   console.log(target.id);
   console.log(stateMatrix.toString());
   console.log("i:" + i + ", j:" + j);
-  if (stateMatrix[i][j] == " ") {
-    target.innerHTML = stateMatrix[i][j] = getMove();
+  if (stateMatrix[i][j] === " ") {
+    stateMatrix[i][j] = getMove();
+    target.innerHTML = stateMatrix[i][j];
     console.log(stateMatrix[i][j]);
   }
   checkWinner();
 }
 function checkWinner() {
-  var row0 = [stateMatrix[0][0],stateMatrix[0][1],stateMatrix[0][2]].join("");
-  var row1 = [stateMatrix[1][0],stateMatrix[1][1],stateMatrix[1][2]].join("");
-  var row2 = [stateMatrix[2][0],stateMatrix[2][1],stateMatrix[2][2]].join("");
-  var col0 = [stateMatrix[0][0],stateMatrix[1][0],stateMatrix[2][0]].join("");
-  var col1 = [stateMatrix[0][1],stateMatrix[1][1],stateMatrix[2][1]].join("");
-  var col2 = [stateMatrix[0][2],stateMatrix[1][2],stateMatrix[2][2]].join("");
-  var diag0022 = [stateMatrix[0][0],stateMatrix[1][1],stateMatrix[2][2]].join("");
-  var diag0220 = [stateMatrix[0][2],stateMatrix[1][1],stateMatrix[2][0]].join("");
+  const row0 = [stateMatrix[0][0],stateMatrix[0][1],stateMatrix[0][2]].join("");
+  const row1 = [stateMatrix[1][0],stateMatrix[1][1],stateMatrix[1][2]].join("");
+  const row2 = [stateMatrix[2][0],stateMatrix[2][1],stateMatrix[2][2]].join("");
+  const col0 = [stateMatrix[0][0],stateMatrix[1][0],stateMatrix[2][0]].join("");
+  const col1 = [stateMatrix[0][1],stateMatrix[1][1],stateMatrix[2][1]].join("");
+  const col2 = [stateMatrix[0][2],stateMatrix[1][2],stateMatrix[2][2]].join("");
+  const diag0022 = [stateMatrix[0][0],stateMatrix[1][1],stateMatrix[2][2]].join("");
+  const diag0220 = [stateMatrix[0][2],stateMatrix[1][1],stateMatrix[2][0]].join("");
 
-  var states = [row0,row1,row2,col0,col1,col2,diag0022,diag0220];
+  const states = [row0,row1,row2,col0,col1,col2,diag0022,diag0220];
   console.log("states: " + states.toString());
 
   if (states.includes("XXX")) {
@@ -60,15 +60,15 @@ function checkWinner() {
   }
 
 }
-function makeCurrentMoveGetter() {
-  var mover = "X";
+let makeCurrentMoveGetter = function() {
+  let mover = "X";
   return function() {
-    if (this.mover === "X") {
-      this.mover = "O";
+    if (makeCurrentMoveGetter.mover === "X") {
+      makeCurrentMoveGetter.mover = "O";
     } else {
-      this.mover = "X";
+      makeCurrentMoveGetter.mover = "X";
     }
-    return this.mover;
+    return makeCurrentMoveGetter.mover;
   }
 }
-var getMove = makeCurrentMoveGetter();
+let getMove = makeCurrentMoveGetter();
