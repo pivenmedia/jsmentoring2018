@@ -17,11 +17,9 @@ table.onclick = function(event) {
   // если цикл дошёл до table и ничего не нашёл,
   // то обработчик просто заканчивает работу
 }
-let stateMatrix = table.dataset.stateMatrix;
-stateMatrix = [[" "," "," "],[" "," "," "],[" "," "," "]];
+let stateMatrix = [[" "," "," "],[" "," "," "],[" "," "," "]];
 function resetGame() {
   stateMatrix = [[" "," "," "],[" "," "," "],[" "," "," "]];
-
 }
 function doMove(target) {
   var i,j;
