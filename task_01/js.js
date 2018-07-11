@@ -20,9 +20,15 @@ table.onclick = function(event) {
 let stateMatrix = [[" "," "," "],[" "," "," "],[" "," "," "]];
 function resetGame() {
   stateMatrix = [[" "," "," "],[" "," "," "],[" "," "," "]];
+  for (let i = 0; i < stateMatrix.length; i++) {
+    for (let j = 0; j < stateMatrix[i].length; j++) {
+      let cell = document.getElementById("" + i + "_" + j);
+      cell.innerHTML = stateMatrix[i][j];
+    }
+  }
 }
 function doMove(target) {
-  var i,j;
+  let i,j;
   [i, j] = target.id.split('_').map(function(ind){ return +ind });
   console.log(target.id);
   console.log(stateMatrix.toString());
@@ -50,13 +56,15 @@ function checkWinner() {
   if (states.includes("XXX")) {
     console.log("X - win! Congrats!!!");
     alert("X - win! Congrats!!!");
+    resetGame();
     return;
   }
   if (states.includes("OOO")) {
     console.log("O - win! Congrats!!!");
     alert("O - win! Congrats!!!");
+    resetGame();
+    return;
   }
-
 }
 let makeCurrentMoveGetter = function() {
   let mover = "X";
