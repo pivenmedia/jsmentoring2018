@@ -18,6 +18,8 @@ table.onclick = function(event) {
   // то обработчик просто заканчивает работу
 }
 let stateMatrix = [[" "," "," "],[" "," "," "],[" "," "," "]];
+const MAX_MOVES_NUM = 3*3;
+let movesDone = 0;
 function resetGame() {
   stateMatrix = [[" "," "," "],[" "," "," "],[" "," "," "]];
   for (let i = 0; i < stateMatrix.length; i++) {
@@ -26,6 +28,7 @@ function resetGame() {
       cell.innerHTML = stateMatrix[i][j];
     }
   }
+  getMove = makeCurrentMoveGetter();
 }
 function doMove(target) {
   let i,j;
@@ -38,6 +41,7 @@ function doMove(target) {
     target.innerHTML = stateMatrix[i][j];
     console.log(stateMatrix[i][j]);
   }
+  movesDone++;
   checkWinner();
 }
 function checkWinner() {
@@ -64,6 +68,11 @@ function checkWinner() {
     alert("O - win! Congrats!!!");
     resetGame();
     return;
+  }
+  if (movesDone == MAX_MOVES_NUM) {
+    console.log("No winner! No moves left.");
+    alert("No winner! No moves left.");
+    resetGame();
   }
 }
 let makeCurrentMoveGetter = function() {
