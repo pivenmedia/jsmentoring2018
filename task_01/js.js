@@ -29,6 +29,7 @@ function resetGame() {
     }
   }
   getMove = makeCurrentMoveGetter();
+  movesDone = 0;
 }
 function doMove(target) {
   let i,j;
@@ -69,7 +70,7 @@ function checkWinner() {
     resetGame();
     return;
   }
-  if (movesDone == MAX_MOVES_NUM) {
+  if (movesDone === MAX_MOVES_NUM) {
     console.log("No winner! No moves left.");
     alert("No winner! No moves left.");
     resetGame();
@@ -77,6 +78,9 @@ function checkWinner() {
 }
 let makeCurrentMoveGetter = function() {
   let mover = "X";
+  if (movesDone > 0) {
+    makeCurrentMoveGetter.mover = "O";
+  }
   return function() {
     if (makeCurrentMoveGetter.mover === "X") {
       makeCurrentMoveGetter.mover = "O";
